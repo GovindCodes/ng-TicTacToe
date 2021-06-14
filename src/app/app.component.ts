@@ -4,23 +4,39 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'tic-tac-toe';
 
-  winMessage:  string = ""
-  isCross = false
-  itemArray: string[] = new Array(9).fill('empty')
-  constructor(private toastr: ToastrService){};
+  winMessage: string = '';
+  isCross = false;
+  itemArray: string[] = new Array(9).fill('empty');
+  constructor(private toastr: ToastrService) {}
 
-  reloadGame = ()=>{
+  handleClickk = (itemNumber: number) => {
+    if (this.winMessage) {
+      return this.toastr.success(this.winMessage);
+    }
+
+    if (this.itemArray[itemNumber] === 'empty') {
+      this.itemArray[itemNumber] = this.isCross ? 'cross' : 'circle';
+
+      this.isCross = !this.isCross;
+    } else {
+      this.toastr.warning('Already Filled');
+    }
+
+    this.checkIsWinner();
+  };
+
+  reloadGame = () => {
     this.winMessage = '';
-    this.isCross= false;
+    this.isCross = false;
     this.itemArray = new Array(9).fill('empty');
-  }
+  };
 
-  checkIsWinner= ()=>{
+  checkIsWinner = () => {
     if (
       this.itemArray[0] === this.itemArray[1] &&
       this.itemArray[0] === this.itemArray[2] &&
@@ -70,4 +86,5 @@ export class AppComponent {
     ) {
       this.winMessage = `${this.itemArray[2]} won`;
     }
+  };
 }
