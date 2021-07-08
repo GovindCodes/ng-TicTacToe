@@ -14,7 +14,7 @@ export class AppComponent {
   itemArray: string[] = new Array(9).fill('empty');
   constructor(private toastr: ToastrService) {}
 
-  handleClickk = (itemNumber: number) => {
+  handleClick(itemNumber: number) {
     if (this.winMessage) {
       return this.toastr.success(this.winMessage);
     }
@@ -24,11 +24,11 @@ export class AppComponent {
 
       this.isCross = !this.isCross;
     } else {
-      this.toastr.warning('Already Filled');
+      return this.toastr.info('Already filled');
     }
 
     this.checkIsWinner();
-  };
+  }
 
   reloadGame = () => {
     this.winMessage = '';
